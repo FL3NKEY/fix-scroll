@@ -1,7 +1,7 @@
 {
   "name": "fix-scroll",
   "version": "0.0.1",
-  "description": "A Javascript uility library for working with native scrollbar.",
+  "description": "A Javascript utility library for working with native scrollbar.",
   "main": "dist/fix-scroll.min.js",
   "scripts": {
     "dev": "gulp",
