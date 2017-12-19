@@ -39,7 +39,6 @@
           var currentScroll, height, scrollTop, target, totalScroll;
           target = _findTarget(e);
           if (target) {
-            console.log('touchstart');
             scrollTop = target.scrollTop;
             totalScroll = target.scrollHeight;
             currentScroll = scrollTop + target.offsetHeight;
@@ -71,7 +70,6 @@
           var target;
           target = _findTarget(e);
           if (target) {
-            console.log('touchend');
             return target.dataset[_scrollableDataset] = false;
           }
         };

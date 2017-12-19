@@ -21,7 +21,6 @@ class FixScroll
 		document.addEventListener 'touchstart', (e) =>
 			target = _findTarget e
 			if target
-				console.log 'touchstart'
 				scrollTop = target.scrollTop
 				totalScroll = target.scrollHeight
 				currentScroll = scrollTop + target.offsetHeight
@@ -44,7 +43,6 @@ class FixScroll
 		document.addEventListener 'touchend', (e) =>
 			target = _findTarget e
 			if target
-				console.log 'touchend'
 				target.dataset[_scrollableDataset] = false
 
 	constructor: ->
