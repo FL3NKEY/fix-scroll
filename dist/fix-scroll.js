@@ -13,13 +13,13 @@
   };
 
   FixScroll = function () {
-    var _bindFixScrollEvents, _fixScrollClassName, _fixScrollDataset, _state;
+    var _bindFixScrollEvents, _scrollableClassName, _scrollableDataset, _state;
 
     _state = true;
 
-    _fixScrollClassName = 'fix-scroll';
+    _scrollableClassName = 'fs--scrollable';
 
-    _fixScrollDataset = 'fixScroll';
+    _scrollableDataset = 'fsScrollable';
 
     _bindFixScrollEvents = function () {
       var _findTarget;
@@ -27,7 +27,7 @@
         var target;
         target = e.target;
         while (target !== null) {
-          if (target.classList && target.classList.contains(_fixScrollClassName)) {
+          if (target.classList && target.classList.contains(_scrollableClassName)) {
             break;
           }
           target = target.parentNode;
@@ -45,7 +45,7 @@
             currentScroll = scrollTop + target.offsetHeight;
             height = target.clientHeight;
             if (height === totalScroll) {
-              target.dataset[_fixScrollDataset] = true;
+              target.dataset[_scrollableDataset] = true;
             }
             if (scrollTop <= 0) {
               return target.scrollTop = 1;
@@ -60,7 +60,7 @@
           var target;
           if (!_this.getState()) {
             target = _findTarget(e);
-            if (target && indexOf.call(target.dataset, _fixScrollDataset) >= 0) {
+            if (target && indexOf.call(target.dataset, _scrollableDataset) >= 0) {
               return e.preventDefault();
             }
           }
@@ -72,7 +72,7 @@
           target = _findTarget(e);
           if (target) {
             console.log('touchend');
-            return target.dataset[_fixScrollDataset] = false;
+            return target.dataset[_scrollableDataset] = false;
           }
         };
       }(this));

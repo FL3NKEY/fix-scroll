@@ -5,14 +5,14 @@
 
 class FixScroll
 	_state = true
-	_fixScrollClassName = 'fix-scroll'
-	_fixScrollDataset = 'fixScroll'
+	_scrollableClassName = 'fs--scrollable'
+	_scrollableDataset = 'fsScrollable'
 
 	_bindFixScrollEvents = ->
 		_findTarget = (e) ->
 			target = e.target
 			while target != null
-				if target.classList && target.classList.contains _fixScrollClassName
+				if target.classList && target.classList.contains _scrollableClassName
 					break
 					
 				target = target.parentNode
@@ -28,7 +28,7 @@ class FixScroll
 				height = target.clientHeight
 
 				if height == totalScroll
-					target.dataset[_fixScrollDataset] = true
+					target.dataset[_scrollableDataset] = true
 
 				if scrollTop <= 0
 					target.scrollTop = 1
@@ -38,14 +38,14 @@ class FixScroll
 		document.addEventListener 'touchmove', (e) =>
 			if !do @getState
 				target = _findTarget e
-				if target && _fixScrollDataset in target.dataset
+				if target && _scrollableDataset in target.dataset
 					do e.preventDefault
 
 		document.addEventListener 'touchend', (e) =>
 			target = _findTarget e
 			if target
 				console.log 'touchend'
-				target.dataset[_fixScrollDataset] = false
+				target.dataset[_scrollableDataset] = false
 
 	constructor: ->
 		_bindFixScrollEvents.call @
