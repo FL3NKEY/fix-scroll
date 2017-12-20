@@ -21,9 +21,15 @@ window.fixScroll;
 ## Preventing
 When you do `fixScroll.hide()` you also preventing scroll for iOS ([issue](https://stackoverflow.com/questions/28790889/css-how-to-prevent-scrolling-on-ios-safari)).
 <br>
-If you want make scrollable element when scroll is prevented, use `fs--scrollable` class.
+If you want make scrollable element on touch devices when scroll is prevented, use `fs--scrollable` class (also element must have `overflow` property).
 ```html
-<div class="fs--scrollable"></div>
+<div class="modal-scroll fs--scrollable"></div>
+```
+```css
+.modal-scroll {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+}
 ```
 Live example: https://jsfiddle.net/FL3N/1gaxegxp/
 
