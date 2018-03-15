@@ -23,27 +23,36 @@ class FixScroll
 			if target
 				scrollTop = target.scrollTop
 				totalScroll = target.scrollHeight
-				currentScroll = scrollTop + target.offsetHeight
 				height = target.clientHeight
+				target.dataset._deltaDataset = e.touches[0].clientY
 
 				if height == totalScroll
-					target.dataset[_scrollableDataset] = true
-
-				if scrollTop <= 0
-					target.scrollTop = 1
-				else if currentScroll >= totalScroll
-					target.scrollTop = scrollTop - 1
+					target.dataset._preventScrollableDataset = 'true'
 
 		document.addEventListener 'touchmove', (e) =>
 			if !do @getState
 				target = _findTarget e
-				if target && _scrollableDataset in target.dataset
-					do e.preventDefault
+				if target
+					if target.dataset._preventScrollableDataset == 'true'
+						do e.preventDefault
+					else
+						scrollTop = target.scrollTop
+						totalScroll = target.scrollHeight
+						currentScroll = scrollTop + target.offsetHeight
+						delta = parseFloat target.dataset._deltaDataset
+						currentDelta = e.touches[0].clientY
+
+						if scrollTop <= 0
+							if(delta < currentDelta)
+								do e.preventDefault
+						else if currentScroll >= totalScroll
+							if(delta > currentDelta)
+								do e.preventDefault
 
 		document.addEventListener 'touchend', (e) =>
 			target = _findTarget e
 			if target
-				target.dataset[_scrollableDataset] = false
+				target.dataset._preventScrollableDataset = 'false'
 
 	constructor: ->
 		_bindFixScrollEvents.call @

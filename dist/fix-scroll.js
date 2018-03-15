@@ -5,12 +5,7 @@
  */
 
 (function () {
-  var FixScroll,
-      indexOf = [].indexOf || function (item) {
-    for (var i = 0, l = this.length; i < l; i++) {
-      if (i in this && this[i] === item) return i;
-    }return -1;
-  };
+  var FixScroll;
 
   FixScroll = function () {
     var _bindFixScrollEvents, _scrollableClassName, _scrollableDataset, _state;
@@ -36,31 +31,43 @@
       };
       document.addEventListener('touchstart', function (_this) {
         return function (e) {
-          var currentScroll, height, scrollTop, target, totalScroll;
+          var height, scrollTop, target, totalScroll;
           target = _findTarget(e);
           if (target) {
             scrollTop = target.scrollTop;
             totalScroll = target.scrollHeight;
-            currentScroll = scrollTop + target.offsetHeight;
             height = target.clientHeight;
+            target.dataset._deltaDataset = e.touches[0].clientY;
             if (height === totalScroll) {
-              target.dataset[_scrollableDataset] = true;
-            }
-            if (scrollTop <= 0) {
-              return target.scrollTop = 1;
-            } else if (currentScroll >= totalScroll) {
-              return target.scrollTop = scrollTop - 1;
+              return target.dataset._preventScrollableDataset = 'true';
             }
           }
         };
       }(this));
       document.addEventListener('touchmove', function (_this) {
         return function (e) {
-          var target;
+          var currentDelta, currentScroll, delta, scrollTop, target, totalScroll;
           if (!_this.getState()) {
             target = _findTarget(e);
-            if (target && indexOf.call(target.dataset, _scrollableDataset) >= 0) {
-              return e.preventDefault();
+            if (target) {
+              if (target.dataset._preventScrollableDataset === 'true') {
+                return e.preventDefault();
+              } else {
+                scrollTop = target.scrollTop;
+                totalScroll = target.scrollHeight;
+                currentScroll = scrollTop + target.offsetHeight;
+                delta = parseFloat(target.dataset._deltaDataset);
+                currentDelta = e.touches[0].clientY;
+                if (scrollTop <= 0) {
+                  if (delta < currentDelta) {
+                    return e.preventDefault();
+                  }
+                } else if (currentScroll >= totalScroll) {
+                  if (delta > currentDelta) {
+                    return e.preventDefault();
+                  }
+                }
+              }
             }
           }
         };
@@ -70,7 +77,7 @@
           var target;
           target = _findTarget(e);
           if (target) {
-            return target.dataset[_scrollableDataset] = false;
+            return target.dataset._preventScrollableDataset = 'false';
           }
         };
       }(this));
