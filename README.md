@@ -31,7 +31,7 @@ If you want make scrollable element on touch devices when scroll is prevented, u
 	-webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
 }
 ```
-Live example: https://jsfiddle.net/FL3N/1gaxegxp/
+Live example: https://s.codepen.io/FL3NKEY/debug/YaQPrg/bYrdyGLGdoJA
 
 ## Methods
 ### hide()
