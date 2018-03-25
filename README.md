@@ -32,6 +32,7 @@ If you want make scrollable element on touch devices when scroll is prevented, u
 }
 ```
 Live example: https://s.codepen.io/FL3NKEY/debug/YaQPrg/bYrdyGLGdoJA
+<br>
 Source code: https://codepen.io/FL3NKEY/pen/YaQPrg
 
 ## Methods
