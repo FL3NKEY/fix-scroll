@@ -97,9 +97,9 @@ var findTarget = function findTarget(e) {
 	while (target !== null) {
 		if (target.classList && target.classList.contains(SCROLLABLE_CLASSNAME)) {
 			break;
-		};
+		}
 		target = target.parentNode;
-	};
+	}
 	return target;
 };
 
@@ -113,8 +113,8 @@ var touchstartEventHandler = function touchstartEventHandler(e, fixScroll) {
 
 		if (height === totalScroll) {
 			target.dataset[PREVENT_SCROLL_DATASET] = 'true';
-		};
-	};
+		}
+	}
 };
 
 var touchmoveEventHandler = function touchmoveEventHandler(e, fixScroll) {
@@ -133,22 +133,22 @@ var touchmoveEventHandler = function touchmoveEventHandler(e, fixScroll) {
 				if (scrollTop <= 0) {
 					if (delta < currentDelta) {
 						e.preventDefault();
-					};
+					}
 				} else if (currentScroll >= totalScroll) {
 					if (delta > currentDelta) {
 						e.preventDefault();
-					};
-				};
-			};
-		};
-	};
+					}
+				}
+			}
+		}
+	}
 };
 
 var touchendEventHandler = function touchendEventHandler(e, fixScroll) {
 	var target = findTarget(e);
 	if (target) {
 		target.dataset[PREVENT_SCROLL_DATASET] = 'false';
-	};
+	}
 };
 
 var bindEvents = function bindEvents(fixScroll) {
@@ -198,7 +198,7 @@ var FixScroll = function () {
 				this.hide();
 			} else {
 				this.show();
-			};
+			}
 		}
 	}, {
 		key: 'getWidth',
@@ -222,8 +222,6 @@ var FixScroll = function () {
 
 	return FixScroll;
 }();
-
-;
 
 var fixScroll = exports.fixScroll = new FixScroll();
 

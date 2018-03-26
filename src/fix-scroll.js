@@ -4,69 +4,67 @@ const DELTA_DATASET = 'fsDelta';
 
 const findTarget = (e) => {
 	let target = e.target;
-	while(target !== null) {
-		if(target.classList && target.classList.contains(SCROLLABLE_CLASSNAME)) {
+	while (target !== null) {
+		if (target.classList && target.classList.contains(SCROLLABLE_CLASSNAME)) {
 			break;
-		};
+		}
 		target = target.parentNode;
-	};
+	}
 	return target;
 };
 
 const touchstartEventHandler = (e, fixScroll) => {
 	const target = findTarget(e);
-	if(target) {
+	if (target) {
 		const scrollTop = target.scrollTop;
 		const totalScroll = target.scrollHeight;
 		const height = target.clientHeight;
 		target.dataset[DELTA_DATASET] = e.touches[0].clientY;
 
-		if(height === totalScroll) {
+		if (height === totalScroll) {
 			target.dataset[PREVENT_SCROLL_DATASET] = 'true';
-		};
-	};
+		}
+	}
 };
 
 const touchmoveEventHandler = (e, fixScroll) => {
-	if(!fixScroll.getState()) {
+	if (!fixScroll.getState()) {
 		const target = findTarget(e);
-		if(target) {
-			if(target.dataset[PREVENT_SCROLL_DATASET] === 'true') {
+		if (target) {
+			if (target.dataset[PREVENT_SCROLL_DATASET] === 'true') {
 				e.preventDefault();
-			}
-			else {
+			} else {
 				const scrollTop = target.scrollTop;
 				const totalScroll = target.scrollHeight;
 				const currentScroll = scrollTop + target.offsetHeight;
 				const delta = parseFloat(target.dataset[DELTA_DATASET]);
 				const currentDelta = e.touches[0].clientY;
 
-				if(scrollTop <= 0) {
-					if(delta < currentDelta) {
+				if (scrollTop <= 0) {
+					if (delta < currentDelta) {
 						e.preventDefault();
-					};
+					}
+				} else if (currentScroll >= totalScroll) {
+					if (delta > currentDelta) {
+						e.preventDefault();
+					}
 				}
-				else if(currentScroll >= totalScroll) {
-					if(delta > currentDelta) {
-						e.preventDefault();
-					};
-				};
-			};
-		};
-	};
+			}
+		}
+	}
 };
 
 const touchendEventHandler = (e, fixScroll) => {
 	const target = findTarget(e);
-	if(target) {
+	if (target) {
 		target.dataset[PREVENT_SCROLL_DATASET] = 'false';
-	};
+	}
 };
 
 const bindEvents = (fixScroll) => {
-	document.addEventListener('touchstart', e => touchstartEventHandler(e, fixScroll));
-	document.addEventListener('touchmove', e => touchmoveEventHandler(e, fixScroll));
-	document.addEventListener('touchend', e => touchendEventHandler(e, fixScroll));
+	document.addEventListener('touchstart', (e) => touchstartEventHandler(e, fixScroll));
+	document.addEventListener('touchmove', (e) => touchmoveEventHandler(e, fixScroll));
+	document.addEventListener('touchend', (e) => touchendEventHandler(e, fixScroll));
 };
 
 class FixScroll {
@@ -93,12 +91,11 @@ class FixScroll {
 	}
 
 	toggle() {
-		if(this.getState()) {
+		if (this.getState()) {
 			this.hide();
-		}
-		else {
+		} else {
 			this.show();
-		};
+		}
 	}
 
 	getWidth() {
@@ -116,6 +113,6 @@ class FixScroll {
 		const currentWidth = windowWidth - documentWidth;
 		return currentWidth;
 	}
-};
+}
 
 export const fixScroll = new FixScroll();
